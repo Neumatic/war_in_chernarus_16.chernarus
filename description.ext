@@ -1,0 +1,1156 @@
+showGps = 1;
+enableItemsDropping = 0;
+loadScreen = "pics\loading.jpg";
+OnLoadMission = "War in Chernarus";
+
+class Header
+{
+	gameType = COOP;
+	minPlayers = 1;
+	maxPlayers = 3;
+};
+
+disabledAI = 1;
+Respawn = "BASE";
+RespawnDelay = 6;
+RespawnDialog = 0;
+
+#include "warcontext\dialogs\define.hpp"
+#include "warcontext\dialogs\mission.hpp"
+
+#include "extern\R3F_DEBUG\Scripts\R3F_DEBUG_Configuration.h"
+#include "extern\R3F_DEBUG\scripts\map_dlg.h"
+#include "extern\R3F_DEBUG\scripts\script_dlg.h"
+#include "extern\R3F_DEBUG\scripts\spy_dlg.h"
+#include "extern\R3F_ARTY_AND_LOG\desc_include.h"
+#include "extern\R3F_revive\dlg_attente_reanimation.h"
+#include "extern\spect\spectating.hpp"
+#include "extern\TeamStatusdialog\TeamStatusDialog.hpp"
+#include "extern\bon_getbackpack\dialog\Common.hpp"
+#include "extern\bon_getbackpack\dialog\getbackpack.hpp"
+#include "extern\bon_loadoutpresets\dialog\LoadoutPreset.hpp"
+
+#include "extern\heli_extras\heli_extras_dialog\heli_extras_dialog.hpp"
+#include "extern\heli_extras\heli_extras_dialog\airplane_extras_dialog.hpp"
+
+class Extended_PreInit_EventHandlers
+{
+	class heli_extras
+	{
+		clientInit = "execVM 'extern\heli_extras\heli_extras_preclientinit.sqf'";
+	};
+};
+
+class Extended_PostInit_EventHandlers
+{
+	class heli_extras
+	{
+		clientInit = "execVM 'extern\heli_extras\heli_extras_init.sqf'";
+	};
+};
+
+class RscTitles
+{
+	#include "extern\R3F_DEBUG\scripts\main_dlg.h"
+
+	titles[] = {"warcontextlabel","arma2oasplash","keypad1","keypad2","keypad3","keypad4","keypad5","keypad6","keypad7","keypad8","keypad9","TitreMission","Titrecredits","LooseMission","WinMission","infomessage","infomission"};
+
+	class warcontextlabel
+	{
+		idd = -1;
+		movingEnable = 0;
+		duration = 10;
+		name = "warcontextlabel";
+		sizeEx = 256;
+
+		controls[] = {"Picture"};
+
+		class Picture : RscPicture
+		{
+			x = 0.27;
+			y = 0.4;
+			w = 0.5;
+			h = 0.3;
+			text = "pics\warcontext.paa";
+			sizeEx = 256;
+		};
+	};
+
+	class arma2oasplash
+	{
+		idd = -1;
+		movingEnable = 0;
+		duration = 4;
+		name = "arma2oasplash";
+		sizeEx = 256;
+
+		controls[] = {"Picture"};
+
+		class Picture : RscPicture
+		{
+			x = 0.3;
+			y = 0.3;
+			w = 0.4;
+			h = 0.35;
+			text = "ca\ui\data\logo_arma2ep1_ca.paa";
+			sizeEx = 256;
+		};
+	};
+
+	class keypad1
+	{
+		idd = -1;
+		movingEnable = 0;
+		duration = 10;
+		name = "keypad1";
+		sizeEx = 128;
+
+		controls[] = {"Picture"};
+
+		class Picture : RscPicture
+		{
+			x = 0.30;
+			y = 0.4;
+			w = 0.15;
+			h = 0.15;
+			text = "pics\keypad1.paa";
+			sizeEx = 128;
+		};
+	};
+
+	class keypad2
+	{
+		idd = -1;
+		movingEnable = 0;
+		duration = 10;
+		name = "keypad2";
+		sizeEx = 128;
+
+		controls[] = {"Picture"};
+
+		class Picture : RscPicture
+		{
+			x = 0.30;
+			y = 0.4;
+			w = 0.15;
+			h = 0.15;
+			text = "pics\keypad2.paa";
+			sizeEx = 128;
+		};
+	};
+
+	class keypad3
+	{
+		idd = -1;
+		movingEnable = 0;
+		duration = 10;
+		name = "keypad3";
+		sizeEx = 128;
+
+		controls[] = {"Picture"};
+
+		class Picture : RscPicture
+		{
+			x = 0.30;
+			y = 0.4;
+			w = 0.15;
+			h = 0.15;
+			text = "pics\keypad3.paa";
+			sizeEx = 128;
+		};
+	};
+
+	class keypad4
+	{
+		idd = -1;
+		movingEnable = 0;
+		duration = 10;
+		name = "keypad4";
+		sizeEx = 128;
+
+		controls[] = {"Picture"};
+
+		class Picture : RscPicture
+		{
+			x = 0.30;
+			y = 0.4;
+			w = 0.15;
+			h = 0.15;
+			text = "pics\keypad4.paa";
+			sizeEx = 128;
+		};
+	};
+
+	class keypad5
+	{
+		idd = -1;
+		movingEnable = 0;
+		duration = 10;
+		name = "keypad5";
+		sizeEx = 128;
+
+		controls[] = {"Picture"};
+
+		class Picture : RscPicture
+		{
+			x = 0.30;
+			y = 0.4;
+			w = 0.15;
+			h = 0.15;
+			text = "pics\keypad5.paa";
+			sizeEx = 128;
+		};
+	};
+
+	class keypad6
+	{
+		idd = -1;
+		movingEnable = 0;
+		duration = 10;
+		name = "keypad6";
+		sizeEx = 128;
+
+		controls[] = {"Picture"};
+
+		class Picture : RscPicture
+		{
+			x = 0.30;
+			y = 0.4;
+			w = 0.15;
+			h = 0.15;
+			text = "pics\keypad6.paa";
+			sizeEx = 128;
+		};
+	};
+
+	class keypad7
+	{
+		idd = -1;
+		movingEnable = 0;
+		duration = 10;
+		name = "keypad7";
+		sizeEx = 128;
+
+		controls[] = {"Picture"};
+
+		class Picture : RscPicture
+		{
+			x = 0.30;
+			y = 0.4;
+			w = 0.15;
+			h = 0.15;
+			text = "pics\keypad7.paa";
+			sizeEx = 128;
+		};
+	};
+
+	class keypad8
+	{
+		idd = -1;
+		movingEnable = 0;
+		duration = 10;
+		name = "keypad8";
+		sizeEx = 128;
+
+		controls[] = {"Picture"};
+
+		class Picture : RscPicture
+		{
+			x = 0.30;
+			y = 0.4;
+			w = 0.15;
+			h = 0.15;
+			text = "pics\keypad8.paa";
+			sizeEx = 128;
+		};
+	};
+
+	class keypad9
+	{
+		idd = -1;
+		movingEnable = 0;
+		duration = 10;
+		name = "keypad9";
+		sizeEx = 128;
+
+		controls[] = {"Picture"};
+
+		class Picture : RscPicture
+		{
+			x = 0.30;
+			y = 0.4;
+			w = 0.15;
+			h = 0.15;
+			text="pics\keypad9.paa";
+			sizeEx = 128;
+		};
+	};
+
+	class TitreMission
+	{
+		controls[] = {"Picturew","TitreMission_texte1"};
+		duration = 3;
+		idd = 50001;
+
+		class TitreMission_texte1 : RscText
+		{
+			text = $STR_WC_TITLE_MISSION;
+			x = 0.1;
+			y = 0.3;
+			w = 1.0;
+			h = 0.7;
+			sizeEx = 0.2;
+			colorText[] = {1,1,1,1};
+			duration = 4;
+		};
+
+		class Picturew : RscPicture
+		{
+			x = 0.35;
+			y = 0.30;
+			w = 0.4;
+			h = 0.2;
+			text = "pics\w.paa";
+		};
+	};
+
+	class Titrecredits
+	{
+		controls[] = {"Titrecredits_texte1","Titrecredits_texte2"};
+		duration = 3;
+		idd = 50002;
+
+		class Titrecredits_texte1 : RscText
+		{
+			text = "Code34";
+			x = 0;
+			y = 0.4;
+			w = 0.9;
+			h = 0.7;
+			sizeEx = 0.075;
+			colorText[] = {1,1,1,1};
+			duration = 4;
+		};
+
+		class Titrecredits_texte2 : RscText
+		{
+			text = "Designed by";
+			x = 0;
+			y = 0.35;
+			w = 0.9;
+			h = 0.7;
+			sizeEx = 0.05;
+			colorText[] = {0,0,0,1};
+			duration = 4;
+		};
+	};
+
+	class LooseMission
+	{
+		controls[] = {"LooseMission_texte1","LooseMission_texte2"};
+		duration = 3;
+		idd = 50003;
+
+		class LooseMission_texte1 : RscText
+		{
+			text = $STR_WC_LOOSE_MISSION;
+			x = 0.05;
+			y = 0.4;
+			w = 0.9;
+			h = 0.7;
+			sizeEx = 0.075;
+			colorText[] = {1,1,1,1};
+			duration = 4;
+		};
+
+		class LooseMission_texte2 : RscText
+		{
+			text = "The End";
+			x = 0.05;
+			y = 0.35;
+			w = 0.9;
+			h = 0.7;
+			sizeEx = 0.05;
+			colorText[] = {0,0,0,1};
+			duration = 4;
+		};
+	};
+
+	class WinMission
+	{
+		controls[] = {"WinMission_texte1","WinMission_texte2"};
+		duration = 10;
+		idd = 50003;
+		onLoad = "uiNamespace setVariable ['wcdisplay', _this select 0];";
+		onunLoad = "uiNamespace setVariable ['wcdisplay', objNull];";
+
+		class WinMission_texte1 : RscText
+		{
+			idc = 10104;
+			text = $STR_WC_WIN_MISSION;
+			x = 0.05;
+			y = 0.4;
+			w = 0.9;
+			h = 0.7;
+			sizeEx = 0.075;
+			colorText[] = {1,1,1,1};
+			duration = 10;
+		};
+
+		class WinMission_texte2 : RscText
+		{
+			text = "The End";
+			x = 0.05;
+			y = 0.35;
+			w = 0.9;
+			h = 0.7;
+			sizeEx = 0.05;
+			colorText[] = {0,0,0,1};
+			duration = 10;
+		};
+	};
+
+	class infomessage
+	{
+		idd = 10100;
+		movingEnable = 0;
+		duration = 1000000000;
+		fadein = 0;
+		name = "infomessage";
+		controlsBackground[] = {"wctext","wcteamtext"};
+		onLoad = "uiNamespace setVariable ['wcdisplay', _this select 0];";
+		onunLoad = "uiNamespace setVariable ['wcdisplay', objNull];";
+
+		class wctext
+		{
+			idc = 10101;
+			type = CT_STRUCTURED_TEXT;
+			style = ST_LEFT;
+			x = (SafeZoneX + 0.02);
+			y = (SafeZoneY + 0.25);
+			w = 0.3;
+			h = 0.6;
+			size = 0.018;
+			colorBackground[] = {0,0,0,0};
+			colortext[] = {0,0,0,0.7};
+			text = "";
+		};
+
+		class wcteamtext
+		{
+			idc = 10103;
+			type = CT_STRUCTURED_TEXT;
+			style = ST_LEFT;
+			x = (SafeZoneW + SafeZoneX) - 0.30;
+			y = (1 + ((0 + SafeZoneY) * -1) - 0.20);
+			w = 0.30;
+			h = 0.20;
+			size = 0.03;
+			colorBackground[] = {0,0,0,0};
+			colortext[] = {0,0,0,0.7};
+			text = "";
+		};
+	};
+
+	class infomission
+	{
+		idd = 10200;
+		movingEnable = 0;
+		duration = 10000;
+		fadein = 1;
+		name = "infomission";
+		//controlsBackground[] = {"wcinfomissiontext","wcinfomissionpicture"};
+		controlsBackground[] = {"wcinfomissiontext"};
+		onLoad = "uiNamespace setVariable ['wcinfomissiondisplay', _this select 0];";
+		onunLoad = "uiNamespace setVariable ['wcinfomissiondisplay', objNull];";
+
+		class wcinfomissiontext
+		{
+			idc = 10201;
+			type = CT_STRUCTURED_TEXT;
+			style = ST_LEFT;
+			//x = (SafeZoneW + SafeZoneX) - 0.70;
+			x = (SafeZoneW + SafeZoneX) - 0.60;
+			y = (1 + ((0 + SafeZoneY) * -1) - 0.44);
+			w = 0.60;
+			h = 0.44;
+			size = 0.08;
+			colorBackground[] = {0,0,0,0};
+			colortext[] = {0,0,0,0.7};
+			text = "";
+		};
+
+		class wcinfomissionpicture
+		{
+			idc = -1;
+			type = CT_STATIC;
+			style = ST_LEFT + ST_PICTURE;
+			x = (SafeZoneW + SafeZoneX) - 0.90;
+			y = (1 + ((0 + SafeZoneY) * -1) - 0.44);
+			w = 0.20;
+			h = 0.35;
+			size = 0.08;
+			font = "Zeppelin32";
+			colorBackground[] = {0,0,0,0};
+			colortext[] = {1,1,1,1};
+			text = "pics\commander.paa";
+			sizeEx = 0.02;
+		};
+	};
+
+	// Needed for R3F log & arty
+	#include "extern\R3F_ARTY_AND_LOG\desc_rsct_include.h"
+};
+
+class cfgFunctions
+{
+	#include "warcontext\cfgwarcontext.h"
+	#include "extern\R3F_DEBUG\scripts\cfgR3FInterface.h"
+};
+
+class CfgMusic
+{
+	tracks[] = {"intro","outro"};
+
+	class intro
+	{
+		name = "intro";
+		sound[] = {"\sound\intro.ogg", db+1, 1.0};
+	};
+
+	class outro
+	{
+		name = "outro";
+		sound[] = {"\sound\outro.ogg", db+0, 1.0};
+	};
+};
+
+class CfgSounds
+{
+	sounds[] = {"paper","drum","allah","bombdetector1","bombdetector2","bombdetector3","bomb","alarm1","alarm2","alarm3","help1","help2","help3","bip1","bip2","bip3","bip4","bip5","bip6","bip7","bip8","bip9","geiger","dog_grognement","dog_bark","missionvoid1"};
+
+	class paper
+	{
+		name = "paper";
+		sound[] = {"\sound\paper.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	class drum
+	{
+		name = "drum";
+		sound[] = {"\sound\drum.ogg", 0.4, 1};
+		titles[] = {};
+	};
+
+	class allah
+	{
+		name = "allah";
+		sound[] = {"\sound\allah.ogg", 0.4, 1};
+		titles[] = {};
+	};
+
+	class bombdetector1
+	{
+		name = "bombdetector1";
+		sound[] = {"\sound\bip6.ogg", 0.4, 0.2};
+		titles[] = {};
+	};
+
+	class bombdetector2
+	{
+		name = "bombdetector2";
+		sound[] = {"\sound\bip6.ogg", 0.4, 1};
+		titles[] = {};
+	};
+
+	class bombdetector3
+	{
+		name = "bombdetector3";
+		sound[] = {"\sound\bip7.ogg", 0.4, 1};
+		titles[] = {};
+	};
+
+	class bomb
+	{
+		name = "bomb";
+		sound[] = {"\sound\bomb.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	class alarm1
+	{
+		name = "alarm1";
+		sound[] = {"\sound\alarm.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	class alarm2
+	{
+		name = "alarm2";
+		sound[] = {"\sound\alarm.ogg", 0.1, 1};
+		titles[] = {};
+	};
+
+	class alarm3
+	{
+		name = "alarm3";
+		sound[] = {"\sound\alarm.ogg", 0.01, 1};
+		titles[] = {};
+	};
+
+	class help1
+	{
+		name = "help1";
+		sound[] = {"\sound\help.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	class help2
+	{
+		name = "help2";
+		sound[] = {"\sound\help.ogg", 0.1, 1};
+		titles[] = {};
+	};
+
+	class help3
+	{
+		name = "help3";
+		sound[] = {"\sound\help.ogg", 0.01, 1};
+		titles[] = {};
+	};
+
+	class bip1
+	{
+		name = "bip1";
+		sound[] = {"\sound\bip1.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	class bip2
+	{
+		name = "bip2";
+		sound[] = {"\sound\bip2.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	class bip3
+	{
+		name = "bip3";
+		sound[] = {"\sound\bip3.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	class bip4
+	{
+		name = "bip4";
+		sound[] = {"\sound\bip4.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	class bip5
+	{
+		name = "bip5";
+		sound[] = {"\sound\bip5.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	class bip6
+	{
+		name = "bip6";
+		sound[] = {"\sound\bip6.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	class bip7
+	{
+		name = "bip7";
+		sound[] = {"\sound\bip7.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	class bip8
+	{
+		name = "bip8";
+		sound[] = {"\sound\bip8.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	class bip9
+	{
+		name = "bip9";
+		sound[] = {"\sound\bip9.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	class geiger
+	{
+		name = "geiger";
+		sound[] = {"\sound\geiger.ogg", 0.6, 1};
+		titles[] = {};
+	};
+
+	class dog_grognement
+	{
+		name = "dog_grognement";
+		sound[] = {"\sound\dog_grognement.ogg", 0.6, 1};
+		titles[] = {};
+	};
+
+	class dog_bark
+	{
+		name = "dog_bark";
+		sound[] = {"\sound\dog_bark.ogg", 0.6, 1};
+		titles[] = {};
+	};
+
+	class missionvoid1
+	{
+		name = "missionvoid1";
+		sound[] = {"\sound\help.ogg", 1, 1};
+		titles[] = {};
+	};
+};
+
+class Params
+{
+	class wcwithACE
+	{
+		title = "MOD: ACE ADDONS ARE ACTIVATED ON SERVER";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 1;
+	};
+
+	class wcaisuppression
+	{
+		title = "MOD: TPWCAS AI SUPPRESSION";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 1;
+	};
+
+	class wcvehiclemanager
+	{
+		title = "MOD: USE VEHICLE MANAGER";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+
+	class wckindofserver
+	{
+		title = "GAME: KIND OF SERVER";
+		values[] = {1,2,3};
+		texts[] = {"TEAM - Admin chooses team members","OPEN SERVER - All players are team members","NO TEAM - All players are mercenaries"};
+		default = 2;
+	};
+
+	class wckindofgame
+	{
+		title = "GAME: KIND OF GAME";
+		values[] = {1,2,3};
+		texts[] = {"ARCADE","SIMULATION","PRACTICE"};
+		default = 2;
+	};
+
+	class wclevelmax
+	{
+		title = "GAME: NUMBER OF MISSIONS TO COMPLETE CAMPAIGN";
+		values[] = {3,5,7,9,11,21,41,61};
+		texts[] = {"2","4","6","8","10","20","40","60"};
+		default = 21;
+	};
+
+	class wcwithhq
+	{
+		title = "GAME: 3 BEST PLAYERS CHOOSE MISSIONS OF PLAYERS";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 1;
+	};
+
+	class wcdamagethreshold
+	{
+		title = "GAMEPLAY: VEHICLE DAMAGE THRESHOLD (BOTH SIDES)";
+		values[] = {1,2,3};
+		texts[] = {"NORMAL: 1","MEDIUM: 1/3","HARD: 1/2"};
+		default = 1;
+	};
+
+	class wcviewdistance
+	{
+		title = "GAMEPLAY: MAX VIEW DISTANCE";
+		values[] = {2500,3000,3500,4000,5000,7500,10000};
+		texts[] = {"2500","3000","3500","4000","5000","7500","10000"};
+		default = 10000;
+	};
+
+	class wcwithcam
+	{
+		title = "GAMEPLAY: DISTANCE OF CAMERA IN EACH MISSION INTRO";
+		values[] = {1,2,3,4};
+		texts[] = {"NO CAMERA","NEAR","FAR","SATELLITE"};
+		default = 4;
+	};
+
+	class wcwithmhq
+	{
+		title = "GAMEPLAY: MHQ IS AVALAIBLE";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+
+	class wcrecruitberanked
+	{
+		title = "GAMEPLAY: PLAYER MUST BE RANKED TO RECRUIT SOME AI";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+
+	class wcwithhalojump
+	{
+		title = "GAMEPLAY: PLAYER CAN DO HALO JUMP FROM BASE";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 1;
+	};
+
+	class wcwithteleporttent
+	{
+		title = "GAMEPLAY: PLAYER CAN TELEPORT TO HIS OWN TENT";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+
+	class wcwithonelife
+	{
+		title = "GAMEPLAY: PLAYER HAS ONLY 1 LIFE";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+
+	class wcwithmarkers
+	{
+		title = "GAMEPLAY: PLAYER NAME MARKER ON MAP";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 1;
+	};
+
+	class wcwithvehicles
+	{
+		title = "GAMEPLAY: PLAYER CAN BUILD AT BASE AND MHQ";
+		values[] = {1,2,3};
+		texts[] = {"NONE","ATV","ALL VEHICLES"};
+		default = 3;
+	};
+
+	class wceverybodymedic
+	{
+		title = "GAMEPLAY: WHO CAN HEAL";
+		values[] = {0,1};
+		texts[] = {"MEDICS","EVERYBODY"};
+		default = 1;
+	};
+
+	class wceverybodyengineer
+	{
+		title = "GAMEPLAY: PLAYERS CAN DETECT IED";
+		values[] = {0,1};
+		texts[] = {"NO (ONLY ENGINEERS)","YES (EVERYBODY)"};
+		default = 1;
+	};
+
+	class wcwithinjuredeffect
+	{
+		title = "GAMEPLAY: RED EFFECT WHEN INJURED";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+
+	class wcwithrandomfuel
+	{
+		title = "GAMEPLAY: RANDOM AMOUNT OF FUEL AND AMMO IN VEHICLES";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+
+	class wcwithteleportflagatend
+	{
+		title = "GAMEPLAY: TELEPORT FLAG APPEARS ON ZONE AFTER FINISHING MISSION";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+
+	class wcdefaultscore
+	{
+		title = "GAMEPLAY: USE DEFAULT PLAYER SCORING";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+
+	class wcopposingforce
+	{
+		title = "ENEMY: ENEMY FORCE ON MISSION ZONE";
+		values[] = {1,2,3,4,5};
+		texts[] = {"WEAK: 2 GROUPS","NORMAL: 4 GROUPS","STRONG: 6 GROUPS","VERY STRONG: 8 GROUPS","AWESOME: 10 GROUPS"};
+		default = 4;
+	};
+
+	class wclevelmaxoutofcity
+	{
+		title = "ENEMY: ENEMY FORCE AROUND MISSION ZONE";
+		values[] = {2,4,6,8,10};
+		texts[] = {"WEAK: 2 GROUPS","NORMAL: 4 GROUPS","STRONG: 6 GROUPS","VERY STRONG: 8 GROUPS","AWESOME: 10 GROUPS"};
+		default = 4;
+	};
+
+	class wcambiantgroups
+	{
+		title = "ENEMY: ENEMY FORCE IN AMBIANT ZONES";
+		values[] = {1,2,3,4};
+		texts[] = {"WEAK: 1 GROUPS","NORMAL: 2 GROUPS","STRONG: 3 GROUPS","VERY STRONG: 4 GROUPS"};
+		default = 2;
+	};
+
+	class wcairopposingforce
+	{
+		title = "ENEMY: ENEMY AIR FORCE SIZE";
+		values[] = {0,1,2,4};
+		texts[] = {"NONE","WEAK: 1 VEHICLE","NORMAL: 2 VEHICLES","STRONG: 4 VEHICLES"};
+		default = 1;
+	};
+
+	class wcairforcetype
+	{
+		title = "ENEMY: ENEMY AIR FORCE TYPE";
+		values[] = {1,2,3};
+		texts[] = {"LIGHT HELICOPTERS","LIGHT/ATTACK HELICOPTERS","ALL AIR VEHICLES"};
+		default = 1;
+	};
+
+	class wcreinforcmentlevel
+	{
+		title = "ENEMY: REINFORCMENT FORCE";
+		values[] = {0,2,4,6};
+		texts[] = {"NONE","WEAK: 2 GROUPS","NORMAL: 4 GROUPS","STRONG: 6 GROUPS"};
+		default = 2;
+	};
+
+	class wcconvoylevel
+	{
+		title = "ENEMY: CONVOYS PATROLLING ON MAP";
+		values[] = {0,5,10,15};
+		texts[] = {"NONE","WEAK: 5 CONVOYS","NORMAL: 10 CONVOYS","STRONG: 15 CONVOYS"};
+		default = 10;
+	};
+
+	class wcaalevel
+	{
+		title = "ENEMY: ANTIAIR SITES ON MAP";
+		values[] = {0,1,2,3};
+		texts[] = {"NONE","WEAK: 1 SITES","NORMAL: 2 SITES","STRONG: 3 SITES"};
+		default = 2;
+	};
+
+	class wcwithcomposition
+	{
+		title = "ENEMY: DYNAMIC ENEMY OUTPOSTS";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+
+	class wcwithstaticweapons
+	{
+		title = "ENEMY: ENEMIES USE STATIC WEAPONS";
+		values[] = {0,2,4,6,8};
+		texts[] = {"NONE","WEAK: 2 STATICS","NORMAL: 4 STATICS","STRONG: 6 STATICS","VERY STRONG: 8 STATICS"};
+		default = 4;
+	};
+
+	class wcwithenemyvehicle
+	{
+		title = "ENEMY: ENEMIES USE VEHICLES";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 1;
+	};
+
+	class wcwithnuclear
+	{
+		title = "ENEMY: ENEMIES USE NUCLEAR BOMB";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+
+	class wcwithseapatrol
+	{
+		title = "ENEMY: ENEMIES USE SEA PATROL";
+		values[] = {0,1,2,3};
+		texts[] = {"NO","WEAK: 1 PATROL","NORMAL: 2 PATROLS","STRONG: 3 PATROLS"};
+		default = 0;
+	};
+
+	class wcskiptime
+	{
+		title = "ENVIRONMENT: DYNAMIC TIME";
+		values[] = {0,1,2};
+		texts[] = {"NO FAST FORWARD","FAST FORWARD","INSTANT FAST FORWARD"};
+		default = 1;
+	};
+
+	class wcwithweather
+	{
+		title = "ENVIRONMENT: DYNAMIC WEATHER";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 1;
+	};
+
+	class wcwithlight
+	{
+		title = "ENVIRONMENT: DYNAMIC LIGHT (SOLAR LIGHT DEPENDING OF OVERCAST)";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+
+	class wcwithenvironment
+	{
+		title = "ENVIRONMENT: ENVIRONMENTAL SOUND";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 1;
+	};
+
+	class wcwithradiomarkers
+	{
+		title = "MARKERS: ENEMY RADIO SITE MARKER ON MAP";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 1;
+	};
+
+	class wcwithgeneratormarkers
+	{
+		title = "MARKERS: ENEMY GENERATOR SITE MARKER ON MAP";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 1;
+	};
+
+	class wcwithaamarkers
+	{
+		title = "MARKERS: ENEMY AA SITES MARKER ON MAP";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+
+	class wcwithmarkerongoal
+	{
+		title = "MARKERS: SHOW A GOAL MARKER";
+		values[] = {0,1,2};
+		texts[] = {"NONE","FOCUS MIDDLE OF RED ZONE","FOCUS ON GOAL"};
+		default = 2;
+	};
+
+	class wccomputedzones
+	{
+		title = "TOWNS: MAX NUMBER OF TOWNS";
+		values[] = {20,40,60,80,100,150};
+		texts[] = {"20 TOWNS","40 TOWNS","60 TOWNS","80 TOWNS","100 TOWNS","150 TOWNS"};
+		default = 100;
+	};
+
+	class wcminimunbuildings
+	{
+		title = "TOWNS: SIZE OF TOWNS FOR MISSION LOCATION";
+		values[] = {5,25,50};
+		texts[] = {"ALL (VILLAGE, TOWN, BIG TOWN)","TOWN: (TOWN, BIG TOWN)","BIG TOWN"};
+		default = 25;
+	};
+
+	class wcwithied
+	{
+		title = "TOWNS: MAX IED PER TOWN";
+		values[] = {0,1,3};
+		texts[] = {"OFF","NORMAL: 1 IED","A LOT: 3 IED"};
+		default = 1;
+	};
+
+	class wcwithminefield
+	{
+		title = "TOWNS: MINEFIELDS ON ROAD";
+		values[] = {0,1};
+		texts[] = {"OFF","ON"};
+		default = 1;
+	};
+
+	class wcwithcivilian
+	{
+		title = "TOWNS: MAX CIVILIANS PER TOWN";
+		values[] = {0,10,15,20};
+		texts[] = {"OFF","LESS: 10 CIVILIANS","NORMAL: 15 CIVILIANS","A LOT: 20 CIVILIANS"};
+		default = 10;
+	};
+
+	class wccivilianfame
+	{
+		title = "TOWNS: CIVILIAN ATTITUDE";
+		values[] = {0,10,20,40};
+		texts[] = {"PEACEFULL","FRIENDLY","HOSTILE","DESTRUCTIVE"};
+		default = 10;
+	};
+
+	class wcwithcivilcar
+	{
+		title = "TOWNS: MAX CIVILIAN VEHICLES PER TOWN";
+		values[] = {0,1,3,5};
+		texts[] = {"OFF","LESS: 1 VEHICLE","NORMAL: 3 VEHICLES","A LOT: 5 VEHICLES"};
+		default = 3;
+	};
+
+	class wcwithsheeps
+	{
+		title = "TOWNS: SHEEPS IN HILLS";
+		values[] = {0,1};
+		texts[] = {"OFF","ON"};
+		default = 0;
+	};
+
+	class wcautoloadweapons
+	{
+		title = "AUTOLOAD WEAPONS (Requires the same addons clientside)";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+
+	class wcautoloadtroops
+	{
+		title = "AUTOLOAD TROOPS (Requires the same addons clientside)";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+
+	class wcautoloadvehicles
+	{
+		title = "AUTOLOAD VEHICLES (Requires the same addons clientside)";
+		values[] = {0,1};
+		texts[] = {"NO","YES"};
+		default = 0;
+	};
+};
