@@ -15,7 +15,6 @@
 private ["_marker"];
 
 _marker = _this select 0;
-_marker = toLower _marker;
 
 WC_MarkersArray set [count WC_MarkersArray, _marker];
 publicVariable "WC_MarkersArray";

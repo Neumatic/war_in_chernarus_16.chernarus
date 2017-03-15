@@ -236,7 +236,8 @@ ACE_BlacklistEnemyClass = [
 	Blacklist friendly units
 */
 BW_WestBlacklist = [
-	"BWMod_MedicG","BWMod_CrewG","BWMod_CrewG_Beret","BWMod_EngineerG","BWMod_SquadLeaderG"
+	"BWMod_MedicG","BWMod_CrewG","BWMod_CrewG_Beret","BWMod_EngineerG","BWMod_MGunnerG_MG3_2","BWMod_MGunnerG_MG4_2",
+	"BWMod_SquadLeaderG"
 ];
 
 if (BWMod_Mod) then {
@@ -422,10 +423,7 @@ ACE_WestSide = [
 		["FR","ACE_FR_MG"],
 
 		// USMC
-		["USMC","ACE_USMC_Soldier_TAR"],
-
-		// US Army
-		["USARMY","ACE_US_Soldier_M224_G"]
+		["USMC","ACE_USMC_Soldier_TAR"]
 	]
 ];
 

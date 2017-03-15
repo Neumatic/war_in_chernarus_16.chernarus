@@ -25,12 +25,11 @@ _key  = _this select 1;
 _mod  = _this select 2;
 _code = _this select 3;
 
-_handlers = switch (_type) do {
-	case "KeyDown": {WC_EH_KeyDown};
-	case "KeyUp": {WC_EH_KeyUp};
-};
+_handlers = missionNamespace getVariable [format ["WC_EH_%1_%2", _type, _key], []];
 
 _index = count _handlers;
-_handlers set [_index, [_key, _mod, _code]];
+_handlers set [_index, [_mod, _code]];
+
+missionNamespace setVariable [format ["WC_EH_%1_%2", _type, _key], _handlers];
 
 _index

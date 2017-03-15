@@ -345,13 +345,6 @@ while {_loop} do {
 
 		// Check if the vehicle is still alive and has enough fuel.
 		if (_vehicle call _fnc_alive) then {
-			_loop = false;
-			_move = false;
-
-			#ifdef DEBUG_CHAT
-				player globalChat format ["AP %1: vehicle=%2 : loop=%3 : move=%4 : pilot=%5 : alive=%6 : canmove=%7 : fuel=%8", _index, _veh_name, _loop, _move, alive _pilot, alive _vehicle, canMove _vehicle, fuel _vehicle];
-			#endif
-		} else {
 			// Find nearest target.
 			_target = _pilot findNearestEnemy _pilot;
 
@@ -413,6 +406,14 @@ while {_loop} do {
 					};
 				};
 			};
+		} else {
+			_loop = false;
+			_move = false;
+
+			#ifdef DEBUG_CHAT
+				player globalChat format ["AP %1: vehicle=%2 : loop=%3 : move=%4 : pilot=%5 : alive=%6 : canmove=%7 : fuel=%8", _index, _veh_name, _loop, _move, alive _pilot, alive _vehicle, canMove _vehicle, fuel _vehicle];
+			#endif
+
 		};
 	};
 

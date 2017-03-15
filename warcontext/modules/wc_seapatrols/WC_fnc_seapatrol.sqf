@@ -90,7 +90,7 @@ while {_loop} do {
 		If there is a target then change mission to attack.
 	*/
 	_target = _leader findNearestEnemy _leader;
-	if (!isNull _leader) then {
+	if (!isNull _target) then {
 		_old_target = _target;
 		_mission = "ATTACK";
 	};

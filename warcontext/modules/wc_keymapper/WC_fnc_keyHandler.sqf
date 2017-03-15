@@ -15,45 +15,19 @@
 		Bool
 */
 
-#include <dik_codes.h>
-
-private ["_type", "_params", "_result", "_handled", "_handlers", "_index", "_check", "_mod"];
+private ["_type", "_params", "_handled"];
 
 _type   = _this select 0;
 _params = _this select 1;
 
-_result = false;
 _handled = false;
 
-_handlers = switch (_type) do {
-	case "KeyDown": {WC_EH_KeyDown};
-	case "KeyUp": {WC_EH_KeyUp};
-};
+{
+	if (format ["[%1,%2,%3]", _params select 2, _params select 3, _params select 4] == format ["%1", _x select 0]) then {
+		_handled = _params call (_x select 1);
+	};
 
-if (count _handlers > 0) then {
-	{
-		_index = _x;
-		if (!isNil "_index") then {
-			if ((_index select 0) == (_params select 1)) then {
-				_check = true;
-				_mod = _index select 1;
+	if (!isNil "_handled" && {typeName _handled == typeName true} && {_handled}) exitWith {nil};
+} count (missionNamespace getVariable [format ["WC_EH_%1_%2", _type, _params select 1], []]);
 
-				for "_i" from 0 to 2 do {
-					if (((_mod select _i) && {!(_params select (_i + 2))})
-					|| {(!(_mod select _i) && {(_params select (_i + 2))})}
-					) exitWith {
-						_check = false;
-					};
-				};
-
-				if (_check) then {
-					_result = _params call (_index select 2);
-				};
-			};
-		};
-
-		if (_result) exitWith {_handled = true};
-	} forEach _handlers;
-};
-
-_handled
+!isNil "_handled" && {typeName _handled == typeName true} && {_handled};

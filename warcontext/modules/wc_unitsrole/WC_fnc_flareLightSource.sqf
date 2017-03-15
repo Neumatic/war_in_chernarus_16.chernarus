@@ -32,14 +32,11 @@ _li setLightAmbient [(_r * 0.8), (_g * 0.8), (_b * 0.8)];
 _li setLightColor [_r, _g, _b];
 _li lightAttachObject [_projectile, [0,0,0]];
 
-[_projectile] spawn {
-	private ["_projectile", "_pos"];
-
-	_projectile = _this select 0;
-
-	while {alive _projectile} do {
-		_pos = [_projectile] call WC_fnc_getPos;
-		_projectile setPosASL [(_pos select 0) + 0.05 * (wind select 0), (_pos select 1) + 0.05 * (wind select 1), (_pos select 2) + 0.1];
+_projectile spawn {
+	private "_pos";
+	while {alive _this} do {
+		_pos = getPosASL _this;
+		_this setPosASL [(_pos select 0) + 0.05 * (wind select 0), (_pos select 1) + 0.05 * (wind select 1), (_pos select 2) + 0.1];
 		sleep 0.075;
 	};
 };
@@ -47,4 +44,4 @@ _li lightAttachObject [_projectile, [0,0,0]];
 waitUntil {!alive _projectile};
 deleteVehicle _li;
 
-_unit setVariable ["WC_FlareShot", true, false];
+_unit setVariable ["WC_FlareShot", true];

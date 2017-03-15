@@ -34,13 +34,13 @@ _damage    = _this select 2;
 	};
 
 	if (isNil {_object getVariable "EH_Selections"}) then {
-		_object setVariable "EH_Selections";
+		_object setVariable ["EH_Selections", []];
 	};
 
 	_selections = _object getVariable "EH_Selections";
 
 	if (isNil {_object getVariable "EH_GetHit"}) then {
-		_object setVariable "EH_GetHit";
+		_object setVariable ["EH_GetHit", []];
 	};
 
 	_get_hit = _object getVariable "EH_GetHit";

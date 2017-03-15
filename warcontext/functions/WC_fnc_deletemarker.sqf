@@ -17,7 +17,6 @@
 private ["_marker", "_removed"];
 
 _marker = _this select 0;
-_marker = toLower _marker;
 
 _removed = false;
 

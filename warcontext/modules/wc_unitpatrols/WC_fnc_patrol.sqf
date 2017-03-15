@@ -40,9 +40,8 @@
 private [
 	"_group", "_position", "_area_size", "_pursue", "_alert", "_dead_bodies", "_formation", "_got_hit", "_loop", "_mission",
 	"_wp_type", "_marker", "_marker_size", "_marker_pos", "_min_dist", "_index", "_radio", "_knows", "_fnc_got_hit",
-	"_leader", "_old_leader", "_near_objects", "_old_target", "_target", "_alert_time", "_behaviour", "_combat_mode",
-	"_wp_form", "_wp_speed", "_unit_pos", "_count", "_run", "_target_pos", "_distance", "_temp_pos", "_got_hit_pos",
-	"_wp", "_move", "_veh_name"
+	"_leader", "_near_objects", "_old_target", "_target", "_alert_time", "_behaviour", "_combat_mode", "_wp_form", "_wp_speed",
+	"_unit_pos", "_count", "_run", "_target_pos", "_distance", "_temp_pos", "_got_hit_pos", "_wp", "_move", "_veh_name"
 ];
 
 _group     = _this select 0;
@@ -120,22 +119,14 @@ while {_loop} do {
 
 	// Check if the leader of the group is too wounded to lead.
 	if (!canStand _leader) then {
-		_old_leader = _leader;
-		_leader = objNull;
-
 		{
 			if (alive _x && {canStand _x}) exitWith {
-				_leader = _x;
+				_group selectLeader _x;
 			};
 		} forEach units _group;
-
-		// If we have a new leader then set the unit as new leader.
-		if (!isNull _leader) then {
-			_group selectLeader _leader;
-		} else {
-			_leader = _old_leader;
-		};
 	};
+
+	_leader = leader _group;
 
 	// Make units pull back out their main weapon.
 	if (_wp_type == "SENTRY") then {
@@ -298,9 +289,6 @@ while {_loop} do {
 
 		// Group has a target to attack.
 		case "ATTACK": {
-			// Set targets variable.
-			_target = objNull;
-
 			_behaviour = "COMBAT";
 			_combat_mode = "RED";
 

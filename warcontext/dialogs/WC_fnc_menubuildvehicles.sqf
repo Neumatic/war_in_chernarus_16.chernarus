@@ -215,8 +215,8 @@ if (isNil "WC_FNC_VehDiagAddVehicle") then {
 };
 
 // Set fuel and ammo.
-if (isNil "NEU_FNC_SetFuelAmmo") then {
-	NEU_FNC_SetFuelAmmo = {
+if (isNil "WC_FNC_SetFuelAmmo") then {
+	WC_FNC_SetFuelAmmo = {
 		private ["_vehicle", "_fuel", "_ammo"];
 
 		_vehicle = _this select 0;
@@ -280,7 +280,7 @@ if (isNil "WC_FNC_VehDiagMenuAction") then {
 							[_vehicle] call WC_fnc_alignToTerrain;
 
 							if (wcwithrandomfuel == 1) then {
-								[_vehicle] call NEU_FNC_SetFuelAmmo;
+								[_vehicle] call WC_FNC_SetFuelAmmo;
 							};
 
 							[_vehicle] call WC_FNC_VehDiagAddVehicle;
@@ -366,7 +366,7 @@ if (isNil "WC_FNC_VehDiagMenuAction") then {
 							[_vehicle] call WC_fnc_alignToTerrain;
 
 							if (wcwithrandomfuel == 1) then {
-								[_vehicle] call NEU_FNC_SetFuelAmmo;
+								[_vehicle] call WC_FNC_SetFuelAmmo;
 							};
 
 							[_vehicle] call WC_FNC_VehDiagAddVehicle;

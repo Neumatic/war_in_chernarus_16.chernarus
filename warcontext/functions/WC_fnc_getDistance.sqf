@@ -14,13 +14,12 @@
 		Scalar
 */
 
-private ["_param_0", "_param_1", "_distance"];
+private ["_pos_0", "_pos_1"];
 
-_param_0 = _this select 0;
-_param_1 = _this select 1;
+_pos_0 = _this select 0;
+_pos_1 = _this select 1;
 
-if (typeName _param_0 == typeName objNull) then {_param_0 = [_param_0] call WC_fnc_getPos};
-if (typeName _param_1 == typeName objNull) then {_param_1 = [_param_1] call WC_fnc_getPos};
+if (typeName _pos_0 != typeName []) then {_pos_0 = [_pos_0] call WC_fnc_getPos};
+if (typeName _pos_1 != typeName []) then {_pos_1 = [_pos_1] call WC_fnc_getPos};
 
-_distance = _param_0 distance _param_1;
-_distance
+_pos_0 distance _pos_1;

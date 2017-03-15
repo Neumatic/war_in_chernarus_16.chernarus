@@ -24,7 +24,6 @@ if (isNil "_var_0") exitWith {isNil "_var_1"};
 if (typeName _var_0 != typeName _var_1) exitWith {false};
 if (typeName _var_0 in ["BOOL","CODE","DIARY_RECORD","SCRIPT","TASK"]) exitWith {_var_0 in [_var_1]};
 if (typeName _var_0 in ["SCALAR","STRING","OBJECT","SIDE","GROUP","TEXT","CONFIG","DISPLAY","CONTROL","TEAM_MEMBER"]) exitWith {_var_0 == _var_1};
-if (typeName _var_0 != "ARRAY") exitWith {false};
 if (count _var_0 != count _var_1) exitWith {false};
 
 _return = true;

@@ -13,15 +13,8 @@
 		Array
 */
 
-private ["_array_0", "_array_1"];
+{
+	(_this select 0) set [count (_this select 0), _x];
+} count (_this select 1);
 
-_array_0 = _this select 0;
-_array_1 = _this select 1;
-
-if (count _array_1 > 0) then {
-	{
-		_array_0 set [count _array_0, _x];
-	} forEach _array_1;
-};
-
-_array_0
+(_this select 0)

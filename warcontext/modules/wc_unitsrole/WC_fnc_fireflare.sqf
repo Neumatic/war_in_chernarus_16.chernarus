@@ -14,9 +14,8 @@
 */
 
 private [
-	"_unit", "_mags", "_flare_count", "_flare_type", "_knows", "_refill", "_ammo_count", "_flare_muzzle", "_shoot_flare",
-	"_target", "_FNC_AddFlares", "_targets", "_targets_query", "_object", "_side", "_known_pos", "_new_target", "_distance",
-	"_units"
+	"_unit", "_mags", "_flare_count", "_flare_type", "_refill", "_ammo_count", "_flare_muzzle", "_shoot_flare", "_target",
+	"_fnc_add_flares", "_units", "_target_pos"
 ];
 
 _unit = _this select 0;
@@ -40,9 +39,6 @@ switch (faction _unit) do {
 	};
 };
 
-// Get the current knowsAbout.
-_knows = (WC_KnowsAbout + 2) - (wcskill * 2);
-
 // Refill his flares after he fires them all?
 _refill = true;
 
@@ -55,7 +51,7 @@ _flare_muzzle = _mags select 1;
 _shoot_flare = false;
 _target = objNull;
 
-_FNC_AddFlares = {
+_fnc_add_flares = {
 	private ["_unit", "_flare_type", "_flare_count", "_mag_count", "_mag_total", "_magazines", "_count_mags", "_resize"];
 
 	_unit        = _this select 0;
@@ -102,11 +98,11 @@ _FNC_AddFlares = {
 };
 
 // Add the flares the to unit.
-[_unit, _flare_type, _flare_count] call _FNC_AddFlares;
+[_unit, _flare_type, _flare_count] call _fnc_add_flares;
 
 // Set the units flare variables.
-_unit setVariable ["WC_FlareShot", false, false];
-_unit setVariable ["WC_Flaring", false, false];
+_unit setVariable ["WC_FlareShot", false];
+_unit setVariable ["WC_Flaring", false];
 
 // When unit fires a flare it creates a light source.
 _unit addEventHandler ["Fired", {
@@ -121,51 +117,19 @@ while {alive _unit} do {
 	if (objNull call WC_fnc_sunAngle) then {
 		// Check if unit is in a vehicle.
 		if (vehicle _unit != _unit) then {
-			while {alive _unit && {vehicle _unit != _unit}} do {sleep 5};
+			while {alive _unit && {vehicle _unit != _unit}} do {sleep 30};
 		};
 
 		if (alive _unit) then {
-			_targets = [];
+			// Find nearest enemy.
+			_target = _unit findNearestEnemy _unit;
 
-			// Get targets from units targetsQuery.
-			_targets_query = _unit targetsQuery ["","","","",""];
-			{
-				_object    = _x select 1;
-				_side      = _x select 2;
-				_known_pos = _x select 4;
-				if (alive _object && {_unit knowsAbout _object > _knows} && {_side in wcside} && {([_unit, _object] call WC_fnc_getDistance) <= 300}) then {
-					if (_object isKindOf "CAManBase"
-					|| {(_object isKindOf "LandVehicle" && {(!isNull effectiveCommander _object && {alive effectiveCommander _object})})}
-					) then {
-						_targets set [count _targets, [_object, _known_pos]];
-					};
-				};
-			} forEach _targets_query;
-
-			_new_target = [objNull, [0,0]];
-
-			if (count _targets > 0) then {
-				_distance = 1000;
-
-				// Get the closest target.
-				{
-					_object    = _x select 0;
-					_known_pos = _x select 1;
-					if (alive _object && {([_unit, _known_pos] call WC_fnc_getDistance) < _distance}) then {
-						_distance = [_unit, _known_pos] call WC_fnc_getDistance;
-						_new_target = [_object, _known_pos];
-					};
-				} forEach _targets;
-			};
-
-			_target    = _new_target select 0;
-			_known_pos = _new_target select 1;
-
-			if (!isNull _target && {alive _target}) then {
-				_units = (([_unit] call WC_fnc_getPos) nearEntities ["CAManBase", 150]) - [_unit];
+			// We have a target.
+			if (!isNull _target) then {
+				_units = ((getPos _unit) nearEntities ["CAManBase", 150]) - [_unit];
 
 				// Check if any friendly units near the unit are currently firing flares.
-				if ({side _x in wcenemyside && {_x getVariable ["WC_Flaring", false]}} count _units == 0) then {
+				if ({_x getVariable ["WC_Flaring", false]} count _units == 0) then {
 					_shoot_flare = true;
 				} else {
 					_shoot_flare = false;
@@ -173,9 +137,10 @@ while {alive _unit} do {
 
 				// If the unit still has flares then fire a flare.
 				if (_shoot_flare && {_ammo_count > 0}) then {
-					_unit setVariable ["WC_Flaring", true, false];
-					_unit doWatch _known_pos;
-					_unit doTarget _target;
+					_unit setVariable ["WC_Flaring", true];
+					_target_pos = _unit getHideFrom _target;
+					_unit doWatch _target_pos;
+					_unit doTarget _target_pos;
 					sleep 0.5;
 
 					_unit selectWeapon _flare_muzzle;
@@ -187,8 +152,8 @@ while {alive _unit} do {
 					// Wait for the flare that was fired to be done.
 					waitUntil {_unit getVariable ["WC_FlareShot", false]};
 
-					_unit setVariable ["WC_FlareShot", false, false];
-					_unit setVariable ["WC_Flaring", false, false];
+					_unit setVariable ["WC_FlareShot", false];
+					_unit setVariable ["WC_Flaring", false];
 				};
 			};
 
@@ -196,7 +161,7 @@ while {alive _unit} do {
 
 			// If the unit is out of flares and refill is true then give the unit more flares.
 			if (_refill && {_ammo_count == 0}) then {
-				[_unit, _flare_type, _flare_count] call _FNC_AddFlares;
+				[_unit, _flare_type, _flare_count] call _fnc_add_flares;
 				_ammo_count = _flare_count;
 
 				sleep 180;
@@ -208,5 +173,5 @@ while {alive _unit} do {
 };
 
 // Reset variables when the unit dies.
-_unit setVariable ["WC_FlareShot", false, false];
-_unit setVariable ["WC_Flaring", false, false];
+_unit setVariable ["WC_FlareShot", false];
+_unit setVariable ["WC_Flaring", false];

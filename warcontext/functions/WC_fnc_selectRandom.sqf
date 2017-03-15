@@ -14,8 +14,4 @@
 		Scalar
 */
 
-private ["_sel"];
-
-_sel = _this select (random (count _this - 1));
-
-_sel
+_this select (random (count _this - 1));

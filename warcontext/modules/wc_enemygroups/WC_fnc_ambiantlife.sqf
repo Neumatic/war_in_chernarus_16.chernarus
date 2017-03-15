@@ -60,7 +60,7 @@ _count_groups = 0;
 			[_marker, false] spawn WC_fnc_creategroup;
 		};
 		_count_groups = _count_groups + 1;
-		sleep 0.5;
+		sleep 0.1;
 	};
 
 	sleep 1;

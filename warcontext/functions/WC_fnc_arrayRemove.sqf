@@ -14,19 +14,14 @@
 		Array
 */
 
-private ["_array", "_remove"];
-
-_array  = _this select 0;
-_remove = _this select 1;
-
-if (count _array > 0) then {
+if (count (_this select 0) > 0) then {
 	{
-		if ([_x, _remove] call WC_fnc_isEqual) then {
-			_array set [_forEachIndex, "<DELETE>"];
+		if ([_x, (_this select 1)] call WC_fnc_isEqual) then {
+			(_this select 0) set [_forEachIndex, "<DELETE>"];
 		};
-	} forEach _array;
+	} forEach (_this select 0);
 
-	_array = _array - ["<DELETE>"];
+	(_this select 0) = (_this select 0) - ["<DELETE>"];
 };
 
-_array
+(_this select 0)

@@ -395,7 +395,7 @@ wcblacklistenemyclass = [
 // Blacklist units from west side
 wcwestblacklist = [
 	// FR
-	"FR_Commander","FR_Corpsman","FR_Marksman","FR_TL",
+	"FR_AC","FR_Commander","FR_Corpsman","FR_Marksman","FR_TL",
 
 	// USMC
 	"USMC_SoldierM_Marksman","USMC_SoldierS_Engineer","USMC_SoldierS_Sniper","USMC_SoldierS_SniperH",
@@ -405,21 +405,22 @@ wcwestblacklist = [
 	// US Army
 	"US_Soldier_Crew_EP1","US_Soldier_Engineer_EP1","US_Soldier_Marksman_EP1","US_Soldier_Medic_EP1",
 	"US_Soldier_Officer_EP1","US_Soldier_Pilot_EP1","US_Soldier_SL_EP1","US_Soldier_Sniper_EP1",
-	"US_Soldier_Sniper_NV_EP1","US_Soldier_SniperH_EP1","US_Soldier_Spotter_EP1","US_Soldier_TL_EP1",
+	"US_Soldier_Sniper_NV_EP1","US_Soldier_SniperH_EP1","US_Soldier_Spotter_EP1","US_Soldier_TL_EP1","USMC_Soldier2",
+	"USMC_SoldierS",
 
 	// BAF
 	"BAF_creWman_W","BAF_Pilot_W","BAF_Soldier_EN_W","BAF_Soldier_Marksman_W","BAF_Soldier_Medic_W",
 	"BAF_Soldier_Officer_W","BAF_Soldier_SL_W","BAF_Soldier_Sniper_W","BAF_Soldier_SniperH_W","BAF_Soldier_SniperN_W",
-	"BAF_Soldier_spotter_W","BAF_Soldier_spotterN_W","BAF_Soldier_TL_W"
+	"BAF_Soldier_spotter_W","BAF_Soldier_spotterN_W","BAF_Soldier_TL_W","BAF_Soldier_FAC_W","BAF_Soldier_N_W"
 ];
 
 // Blacklist of vehicles that can pop dynamicly (exclude mission)
 wcblacklistenemyvehicleclass = [
 	// RU Vehicles
-	"2S6M_Tunguska",
+	"2S6M_Tunguska","GRAD_RU",
 
 	// INS Vehicles
-	"ZSU_INS"
+	"ZSU_INS","GRAD_INS"
 ];
 
 // Kind of houses - computed village
@@ -927,7 +928,7 @@ if (wcautoloadvehicles == 1) then {
 			["USMC","AV8B"],["USMC","AV8B2"],["USMC","F35B"],
 
 			// US Army vehicles
-			["USARMY","M1A2_TUSK_MG"],
+			["USARMY","M1A2_TUSK_MG"],["USARMY","M1129_MC_EP1"],["USARMY","M252"],["USARMY","TKOrdnanceBox_EP1"],
 
 			// US Army air vehicles
 			["USARMY","MQ9PredatorB_US_EP1"],["USARMY","MH6J_EP1"],["USARMY","AH6X_EP1"],["USARMY","UH60M_EP1"],

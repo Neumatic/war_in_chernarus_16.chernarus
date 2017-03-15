@@ -12,15 +12,8 @@
 		Array
 */
 
-private ["_param", "_pos"];
+if (typeName (_this select 0) == typeName objNull) exitWith {[(_this select 0)] call WC_fnc_getObjPos};
+if (typeName (_this select 0) == typeName grpNull) exitWith {[leader (_this select 0)] call WC_fnc_getObjPos};
+if (typeName (_this select 0) == typeName "") exitWith {getMarkerPos (_this select 0)};
 
-_param = _this select 0;
-
-_pos = switch (typeName _param) do {
-	case (typeName objNull): {[_param] call WC_fnc_getObjPos};
-	case (typeName grpNull): {[leader _param] call WC_fnc_getObjPos};
-	case (typeName ""): {getMarkerPos _param};
-	default {position _param};
-};
-
-_pos
+position (_this select 0);

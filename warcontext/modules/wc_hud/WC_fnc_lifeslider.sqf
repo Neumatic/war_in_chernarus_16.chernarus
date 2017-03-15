@@ -41,7 +41,6 @@ while {true} do {
 					};
 				};
 			};
-			sleep 0.05;
 		} forEach crew _vehicle;
 	} else {
 		if (wcrankchanged || wcrankactivate) then {
@@ -80,7 +79,6 @@ while {true} do {
 							};
 						};
 					};
-					sleep 0.05;
 				} forEach playableUnits;
 				wcrankchanged = false;
 			} else {
@@ -104,24 +102,20 @@ while {true} do {
 
 	_text = _text + format ["Day %1 %2<br/>", wcday];
 	if (wcradioalive) then {
-		switch (true) do {
-			case (wcalert > 99): {
-				wcalert = 100;
-				_text = _text + format ["<t color='#CC0000'>Detection: %1</t><br/>", format ["%1", wcalert] + "%"];
-			};
-
-			case (wcalert > 66): {
-				_text = _text + format ["<t color='#FF6619'>Detection: %1</t><br/>", format ["%1", wcalert] + "%"];
-			};
-
-			case (wcalert > 33): {
-				_text = _text + format ["<t color='#FFFF00'>Detection: %1</t><br/>", format ["%1", wcalert] + "%"];
-			};
-
-			default {
-				_text = _text + format ["<t color='#33CC00'>Detection: %1</t><br/>", format ["%1", wcalert] + "%"];
-			};
+		if (wcalert > 99) exitWith {
+			wcalert = 100;
+			_text = _text + format ["<t color='#CC0000'>Detection: %1</t><br/>", format ["%1", wcalert] + "%"];
 		};
+
+		if (wcalert > 66) exitWith {
+			_text = _text + format ["<t color='#FF6619'>Detection: %1</t><br/>", format ["%1", wcalert] + "%"];
+		};
+
+		if (wcalert > 33) exitWith {
+			_text = _text + format ["<t color='#FFFF00'>Detection: %1</t><br/>", format ["%1", wcalert] + "%"];
+		};
+
+		_text = _text + format ["<t color='#33CC00'>Detection: %1</t><br/>", format ["%1", wcalert] + "%"];
 	} else {
 		_text = _text + "Detection: No more radio<br/>";
 	};
